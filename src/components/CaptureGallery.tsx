@@ -1,4 +1,5 @@
 import { Download, Trash2 } from 'lucide-react';
+import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -67,4 +68,4 @@ const CaptureGallery = ({ captures, onDelete }: CaptureGalleryProps) => {
   );
 };
 
-export default CaptureGallery;
+export default memo(CaptureGallery);

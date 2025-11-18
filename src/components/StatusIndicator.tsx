@@ -1,4 +1,5 @@
 import { Camera, AlertCircle, Volume2 } from 'lucide-react';
+import { memo } from 'react';
 import { Badge } from '@/components/ui/badge';
 
 interface StatusIndicatorProps {
@@ -7,7 +8,7 @@ interface StatusIndicatorProps {
   alarmActive: boolean;
 }
 
-const StatusIndicator = ({ cameraActive, detecting, alarmActive }: StatusIndicatorProps) => {
+const StatusIndicator = memo(({ cameraActive, detecting, alarmActive }: StatusIndicatorProps) => {
   return (
     <div className="flex items-center gap-4 p-4 bg-card rounded-lg border border-border">
       <div className="flex items-center gap-2">
@@ -32,6 +33,8 @@ const StatusIndicator = ({ cameraActive, detecting, alarmActive }: StatusIndicat
       </div>
     </div>
   );
-};
+});
+
+StatusIndicator.displayName = 'StatusIndicator';
 
 export default StatusIndicator;

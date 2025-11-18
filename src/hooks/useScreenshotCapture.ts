@@ -40,7 +40,7 @@ export const useScreenshotCapture = (
   useEffect(() => {
     if (shouldCapture && videoElement) {
       captureScreenshot();
-      intervalRef.current = setInterval(captureScreenshot, 5000);
+      intervalRef.current = setInterval(captureScreenshot, 8000);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

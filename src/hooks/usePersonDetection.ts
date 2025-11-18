@@ -58,7 +58,7 @@ export const usePersonDetection = (videoElement: HTMLVideoElement | null, isActi
       const results = await detectorRef.current(canvas);
       
       const personDetected = results.some(
-        (result: any) => result.label === 'person' && result.score > 0.5
+        (result: any) => result.label === 'person' && result.score > 0.6
       );
 
       setIsDetecting(personDetected);
@@ -72,7 +72,7 @@ export const usePersonDetection = (videoElement: HTMLVideoElement | null, isActi
     if (isActive && !isModelLoading && detectorRef.current) {
       intervalRef.current = setInterval(() => {
         detectPerson();
-      }, 2000);
+      }, 1500);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, memo } from 'react';
 
 interface CameraFeedProps {
   isActive: boolean;
@@ -68,4 +68,4 @@ const CameraFeed = ({ isActive, onStreamReady, facingMode = 'user', onFacingMode
   );
 };
 
-export default CameraFeed;
+export default memo(CameraFeed);
