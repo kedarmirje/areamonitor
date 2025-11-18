@@ -25,7 +25,7 @@ export const useScreenshotCapture = (
 
     ctx.drawImage(videoElement, 0, 0);
     
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
     const newCapture: Capture = {
       id: Date.now().toString(),
       dataUrl,
@@ -39,7 +39,7 @@ export const useScreenshotCapture = (
   useEffect(() => {
     if (shouldCapture && videoElement) {
       captureScreenshot();
-      intervalRef.current = setInterval(captureScreenshot, 3000);
+      intervalRef.current = setInterval(captureScreenshot, 5000);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

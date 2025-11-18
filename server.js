@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -8,8 +9,14 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from dist directory
-app.use(express.static(join(__dirname, 'dist')));
+// Enable compression middleware
+app.use(compression());
+
+// Serve static files from dist directory with caching
+app.use(express.static(join(__dirname, 'dist'), {
+  maxAge: '1d',
+  etag: false,
+}));
 
 // Serve index.html for all routes (SPA)
 app.get('*', (req, res) => {

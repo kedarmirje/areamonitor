@@ -62,7 +62,7 @@ export const usePersonDetection = (videoElement: HTMLVideoElement | null, isActi
     if (isActive && !isModelLoading && detectorRef.current) {
       intervalRef.current = setInterval(() => {
         detectPerson();
-      }, 1000);
+      }, 2000);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
