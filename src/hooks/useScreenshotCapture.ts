@@ -6,6 +6,8 @@ interface Capture {
   timestamp: Date;
 }
 
+const MAX_CAPTURES = 10;
+
 export const useScreenshotCapture = (
   videoElement: HTMLVideoElement | null,
   shouldCapture: boolean
@@ -17,23 +19,22 @@ export const useScreenshotCapture = (
     if (!videoElement || videoElement.readyState !== 4) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = videoElement.videoWidth;
-    canvas.height = videoElement.videoHeight;
+    canvas.width = videoElement.videoWidth / 2;
+    canvas.height = videoElement.videoHeight / 2;
     const ctx = canvas.getContext('2d');
     
     if (!ctx) return;
 
-    ctx.drawImage(videoElement, 0, 0);
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
     
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
     const newCapture: Capture = {
       id: Date.now().toString(),
       dataUrl,
       timestamp: new Date(),
     };
 
-    setCaptures(prev => [newCapture, ...prev]);
-    console.log('Screenshot captured:', newCapture.timestamp.toISOString());
+    setCaptures(prev => [newCapture, ...prev].slice(0, MAX_CAPTURES));
   }, [videoElement]);
 
   useEffect(() => {

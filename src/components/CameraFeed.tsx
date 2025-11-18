@@ -3,9 +3,11 @@ import { useRef, useEffect } from 'react';
 interface CameraFeedProps {
   isActive: boolean;
   onStreamReady: (stream: MediaStream) => void;
+  facingMode?: 'user' | 'environment';
+  onFacingModeChange?: (mode: 'user' | 'environment') => void;
 }
 
-const CameraFeed = ({ isActive, onStreamReady }: CameraFeedProps) => {
+const CameraFeed = ({ isActive, onStreamReady, facingMode = 'user', onFacingModeChange }: CameraFeedProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -13,7 +15,7 @@ const CameraFeed = ({ isActive, onStreamReady }: CameraFeedProps) => {
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 1280, height: 720, facingMode: 'user' },
+          video: { width: 640, height: 480, facingMode },
           audio: false,
         });
         
@@ -46,7 +48,7 @@ const CameraFeed = ({ isActive, onStreamReady }: CameraFeedProps) => {
     return () => {
       stopCamera();
     };
-  }, [isActive, onStreamReady]);
+  }, [isActive, onStreamReady, facingMode]);
 
   return (
     <div className="relative w-full aspect-video bg-card rounded-lg overflow-hidden border-2 border-border">

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Play, Square, Shield, Volume2 } from 'lucide-react';
+import { Play, Square, Shield, Volume2, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import CameraFeed from '@/components/CameraFeed';
@@ -13,6 +13,7 @@ const Index = () => {
   const { toast } = useToast();
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [alarmEnabled, setAlarmEnabled] = useState(true);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const videoElementRef = useRef<HTMLVideoElement | null>(null);
 
   const handleStreamReady = (stream: MediaStream) => {
@@ -72,7 +73,7 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Camera Feed */}
           <div className="lg:col-span-2 space-y-4">
-            <CameraFeed isActive={isCameraActive} onStreamReady={handleStreamReady} />
+            <CameraFeed isActive={isCameraActive} onStreamReady={handleStreamReady} facingMode={facingMode} />
             
             {/* Controls */}
             <div className="flex gap-4">
@@ -94,6 +95,14 @@ const Index = () => {
               >
                 <Square className="w-5 h-5 mr-2" />
                 Stop Monitoring
+              </Button>
+              <Button
+                onClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
+                disabled={!isCameraActive}
+                size="lg"
+                variant="outline"
+              >
+                <Smartphone className="w-5 h-5" />
               </Button>
             </div>
 
