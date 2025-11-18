@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, memo, useMemo } from 'react';
 import { Play, Square, Shield, Volume2, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -9,7 +9,7 @@ import { usePersonDetection } from '@/hooks/usePersonDetection';
 import { useAlarm } from '@/hooks/useAlarm';
 import { useScreenshotCapture } from '@/hooks/useScreenshotCapture';
 
-const Index = () => {
+const Index = memo(() => {
   const { toast } = useToast();
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [alarmEnabled, setAlarmEnabled] = useState(true);
@@ -149,6 +149,8 @@ const Index = () => {
       </div>
     </div>
   );
-};
+});
+
+Index.displayName = 'Index';
 
 export default Index;

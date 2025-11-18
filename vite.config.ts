@@ -21,18 +21,26 @@ export default defineConfig(({ mode }) => ({
     terserOptions: {
       compress: {
         drop_console: true,
+        drop_debugger: true,
       },
+      mangle: true,
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tooltip'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'react-vendor';
+            if (id.includes('@radix-ui')) return 'ui-vendor';
+            return 'vendor';
+          }
         },
       },
     },
+    chunkSizeWarningLimit: 1000,
+    reportCompressedSize: false,
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: ['@huggingface/transformers'],
   },
 }));
